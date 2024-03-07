@@ -4,8 +4,8 @@ import Cell from "./Cell.jsx";
 const Grid = ({ array }) => {
   //build a sudoku grid from an array of numbers
   //cell blocks are : [x < 3 && y < 3] [3 < x < 6 && y < 3] [6 < x < 9 && y < 3] ...... etc TODO: figure out a way to represent this neatly
-  //TODO: work out a method of choosing whether or not a cell is mutable
-  const difficulty = 50;
+  //TODO: pass difficulty into Grid from App
+  const difficulty = 100;
 
   console.log("testgrid");
   const result = array.map((row, i) =>

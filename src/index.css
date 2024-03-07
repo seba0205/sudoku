@@ -11,6 +11,9 @@
   size: 50;
   margin: 0;
 }
+.mutable {
+  color: #2d6996;
+}
 .grid {
   user-select: none;
   margin: 30px;

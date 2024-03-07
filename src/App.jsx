@@ -4,9 +4,10 @@ import viteLogo from "/vite.svg";
 import Grid from "./Grid.jsx";
 
 function App() {
+  //TODO: Add a method for generating sudoku puzzles + checking for conflicts
   const test = [
-    [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2],
     [1, 2, 3, 4, 5, 6, 7, 8, 9],
     [1, 2, 3, 4, 5, 6, 7, 8, 9],
     [1, 2, 3, 4, 5, 6, 7, 8, 9],
