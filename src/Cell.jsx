@@ -5,50 +5,62 @@ import React, { useState } from "react";
  * @param {, trueValue, mutable} param takes in the intial value, the true value (correct answer), and whether or not this can be changed
  * @returns a cell component
  */
-const Cell = ({ trueValue, mutable = true, row, col }) => {
+const Cell = ({
+  trueValue,
+  mutable = true,
+  row,
+  col,
+  box,
+  isHighlighted = false,
+  friends,
+  id,
+}) => {
   const initialValue = mutable ? 0 : trueValue;
   const [value, setValue] = useState(initialValue);
+  const [highlight, setHighlighted] = useState(isHighlighted);
 
   //TODO : figure out a better way to do this
-  const box =
-    row < 3 && col < 3
-      ? 1
-      : row < 3 && 3 <= col && col < 6
-      ? 2
-      : row < 3 && 6 <= col && col < 9
-      ? 3
-      : 3 <= row && row < 6 && col < 3
-      ? 4
-      : 3 <= row && row < 6 && 3 <= col && col < 6
-      ? 5
-      : 3 <= row && row < 6 && 6 <= col && col < 9
-      ? 6
-      : 6 <= row && row < 9 && col < 3
-      ? 7
-      : 6 <= row && row < 9 && 3 <= col && col < 6
-      ? 8
-      : 6 <= row && row < 9 && 6 <= col && col < 9
-      ? 9
-      : 0;
 
-  const handleOnClick = () => {
-    if (mutable) {
-      if (value == 9) {
-        setValue(0);
-      } else setValue(value + 1);
+  const handleKeyDown = (e) => {
+    if (/[1-9]/.test(e.key) && mutable) {
+      setValue(e.key);
     }
   };
-  let className = "cell";
-  if (mutable) {
-    className += " mutable";
-  }
+  const handleOnFocus = () => {
+    setHighlighted(true);
+    //TODO: figure out how to highlight cell friends
+  };
 
-  className += " box" + box;
+  const handleOffFocus = () => {
+    setHighlighted(false);
+  };
+  // const handleOnClick = () => {
+  //   if (mutable) {
+  //     if (value == 9) {
+  //       setValue(0);
+  //     } else setValue(value + 1);
+  //   }
+  // };
+
+  const classList = [
+    "cell",
+    mutable && "mutable",
+    highlight && "highlight",
+    "box" + box,
+    "row" + row,
+    "col" + col,
+  ];
 
   //'0' is not needed in sudoku, so 0 here represents a blank cell
   const val = value > 0 ? String(value) : "";
   return (
-    <div className={className} onClick={handleOnClick}>
+    <div
+      className={classList.join(" ").trim()}
+      onFocus={handleOnFocus}
+      onBlur={handleOffFocus}
+      onKeyDown={handleKeyDown}
+      tabIndex="0"
+    >
       {val}
     </div>
   );
