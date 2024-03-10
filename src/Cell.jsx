@@ -23,7 +23,7 @@ const Cell = ({ trueValue, mutable = true, row, col }) => {
       ? 5
       : 3 <= row && row < 6 && 6 <= col && col < 9
       ? 6
-      : 3 <= row && row < 6 && col < 3
+      : 6 <= row && row < 9 && col < 3
       ? 7
       : 6 <= row && row < 9 && 3 <= col && col < 6
       ? 8
@@ -31,7 +31,6 @@ const Cell = ({ trueValue, mutable = true, row, col }) => {
       ? 9
       : 0;
 
-  console.log("testcell");
   const handleOnClick = () => {
     if (mutable) {
       if (value == 9) {
