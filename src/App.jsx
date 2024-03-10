@@ -5,22 +5,11 @@ import Grid from "./Grid.jsx";
 import puzzle from "./SudokuGenerator.js";
 
 function App() {
-  //TODO: Add a method for generating sudoku puzzles + checking for conflicts
-  const test = [
-    [4, 3, 5, 6, 1, 1, 1, 1, 1],
-    [2, 2, 2, 2, 2, 2, 2, 2, 2],
-    [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  ];
+  //TODO: Add checking for conflicts + state and history
 
-  const test2 = puzzle();
+  const sudoku = puzzle();
 
-  return <Grid array={test2} difficulty={50} />;
+  return <Grid array={sudoku} difficulty={50} />;
 }
 
 export default App;
