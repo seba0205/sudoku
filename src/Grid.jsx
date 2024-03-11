@@ -1,32 +1,59 @@
 /**A grid is a collection of cells */
-import Cell from "./Cell.jsx";
 import React, { useState } from "react";
+import Cell from "./Cell.jsx";
 
-const Grid = ({ array, difficulty }) => {
+const Grid = (props) => {
   //build a sudoku grid from an array of numbers
-  //cell blocks are : [x < 3 && y < 3] [3 < x < 6 && y < 3] [6 < x < 9 && y < 3] ...... etc TODO: figure out a way to represent this neatly
 
-  function makeGrid(array) {
-    return array.map((row, i) =>
-      row.map((cell, j) => {
-        const mutable = Math.random() * 100 > difficulty;
-        const box = Math.floor(i / 3) * 3 + Math.floor(j / 3) + 1;
-        return (
-          <Cell
-            trueValue={cell}
-            mutable={mutable}
-            row={i}
-            col={j}
-            box={box}
-            id={"" + i + j + box}
-          />
-        );
-      })
-    );
-  }
-  const grid = makeGrid(array);
+  //state handling
+  const sudoku = { grid: props.grid };
+  const [board, setBoard] = useState(sudoku);
 
-  return <div className="grid">{grid}</div>;
+  const setHighlight = (friends) => {
+    setBoard({
+      ...board,
+      grid: board.grid.map((cell) => {
+        if (friends.includes(cell.id)) {
+          return { ...cell, isHighlighted: true };
+        } else return { ...cell, isHighlighted: false };
+      }),
+    });
+  };
+
+  const clearHighlight = () => {
+    setBoard({
+      ...board,
+      grid: board.grid.map((cell) => {
+        return { ...cell, isHighlighted: false };
+      }),
+    });
+  };
+
+  return (
+    <div className="grid">
+      {board.grid.map((cell) => (
+        <Cell
+          row={cell.row}
+          col={cell.col}
+          box={cell.box}
+          id={cell.id}
+          trueValue={cell.trueValue}
+          mutable={cell.mutable}
+          friends={getFriends(board.grid, cell.row, cell.col, cell.box)}
+          isHighlighted={cell.isHighlighted}
+          setHighlight={setHighlight}
+          clearHighlight={clearHighlight}
+        />
+      ))}
+    </div>
+  );
+};
+
+const getFriends = (grid, row, col, box) => {
+  const colFriends = grid.filter(
+    (cell) => cell.col == col || cell.row == row || cell.box == box
+  );
+  return colFriends.map((c) => c.id);
 };
 
 export default Grid;

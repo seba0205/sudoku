@@ -11,15 +11,15 @@ const Cell = ({
   row,
   col,
   box,
-  isHighlighted = false,
+  isHighlighted,
+  setHighlight,
+  clearHighlight,
   friends,
   id,
 }) => {
-  const initialValue = mutable ? 0 : trueValue;
+  //handles the states - the initial value depends on if the cell is mutable or not
+  const initialValue = mutable ? "" : trueValue;
   const [value, setValue] = useState(initialValue);
-  const [highlight, setHighlighted] = useState(isHighlighted);
-
-  //TODO : figure out a better way to do this
 
   const handleKeyDown = (e) => {
     if (/[1-9]/.test(e.key) && mutable) {
@@ -27,32 +27,22 @@ const Cell = ({
     }
   };
   const handleOnFocus = () => {
-    setHighlighted(true);
-    //TODO: figure out how to highlight cell friends
+    setHighlight(friends);
   };
 
   const handleOffFocus = () => {
-    setHighlighted(false);
+    clearHighlight;
   };
-  // const handleOnClick = () => {
-  //   if (mutable) {
-  //     if (value == 9) {
-  //       setValue(0);
-  //     } else setValue(value + 1);
-  //   }
-  // };
 
   const classList = [
     "cell",
     mutable && "mutable",
-    highlight && "highlight",
+    isHighlighted && "highlight",
     "box" + box,
     "row" + row,
     "col" + col,
   ];
 
-  //'0' is not needed in sudoku, so 0 here represents a blank cell
-  const val = value > 0 ? String(value) : "";
   return (
     <div
       className={classList.join(" ").trim()}
@@ -61,7 +51,7 @@ const Cell = ({
       onKeyDown={handleKeyDown}
       tabIndex="0"
     >
-      {val}
+      {value}
     </div>
   );
 };
